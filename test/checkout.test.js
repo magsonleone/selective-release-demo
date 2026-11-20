@@ -21,3 +21,10 @@ test('adds sales tax to the total', () => {
   assert.equal(summary.tax, 2);
   assert.equal(summary.total, 22);
 });
+
+test('applies the coupon before tax', () => {
+  const summary = checkout(cart(), { taxRate: 0.1, coupon: 'WELCOME5' });
+  assert.equal(summary.discount, 5);
+  assert.equal(summary.tax, 1.5);
+  assert.equal(summary.total, 16.5);
+});

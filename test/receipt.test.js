@@ -26,3 +26,10 @@ test('shows the tax line when there is a tax rate', () => {
   assert.match(receipt, /^Tax \(8%\) +\$1\.60$/m);
   assert.match(receipt, /^Total +\$21\.60$/m);
 });
+
+test('shows the discount line when a coupon is used', () => {
+  const receipt = renderReceipt(checkout(cart(), { coupon: 'SAVE10' }));
+
+  assert.match(receipt, /^Discount \(SAVE10\) +-\$2\.00$/m);
+  assert.match(receipt, /^Total +\$18\.00$/m);
+});
