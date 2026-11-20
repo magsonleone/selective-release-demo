@@ -17,19 +17,33 @@ test('lists the items, the subtotal and the total', () => {
   assert.match(receipt, /^5 x Apple +\$10\.00$/m);
   assert.match(receipt, /^2 x Bread +\$10\.00$/m);
   assert.match(receipt, /^Subtotal +\$20\.00$/m);
-  assert.match(receipt, /^Total +\$20\.00$/m);
+  assert.match(receipt, /^Total +\$27\.99$/m);
 });
 
 test('shows the tax line when there is a tax rate', () => {
   const receipt = renderReceipt(checkout(cart(), { taxRate: 0.08 }));
 
   assert.match(receipt, /^Tax \(8%\) +\$1\.60$/m);
-  assert.match(receipt, /^Total +\$21\.60$/m);
+  assert.match(receipt, /^Total +\$29\.59$/m);
 });
 
 test('shows the discount line when a coupon is used', () => {
   const receipt = renderReceipt(checkout(cart(), { coupon: 'SAVE10' }));
 
   assert.match(receipt, /^Discount \(SAVE10\) +-\$2\.00$/m);
-  assert.match(receipt, /^Total +\$18\.00$/m);
+  assert.match(receipt, /^Total +\$25\.99$/m);
+});
+
+test('shows shipping and how much is missing for free shipping', () => {
+  const receipt = renderReceipt(checkout(cart()));
+
+  assert.match(receipt, /^Shipping +\$7\.99$/m);
+  assert.match(receipt, /^Add \$30\.00 more for free shipping\.$/m);
+});
+
+test('shows free shipping from $50', () => {
+  const receipt = renderReceipt(checkout(createCart([{ sku: 'C', name: 'Chair', price: 55 }])));
+
+  assert.match(receipt, /^Shipping +FREE$/m);
+  assert.doesNotMatch(receipt, /more for free shipping/);
 });

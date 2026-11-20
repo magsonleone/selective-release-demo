@@ -24,7 +24,12 @@ export function renderReceipt(summary) {
     lines.push(row(`Tax (${formatRate(summary.taxRate)})`, formatMoney(summary.tax)));
   }
 
+  lines.push(row('Shipping', summary.shipping === 0 ? 'FREE' : formatMoney(summary.shipping)));
   lines.push(row('Total', formatMoney(summary.total)));
+
+  if (summary.amountToFreeShipping > 0) {
+    lines.push(`Add ${formatMoney(summary.amountToFreeShipping)} more for free shipping.`);
+  }
 
   return lines.join('\n');
 }
