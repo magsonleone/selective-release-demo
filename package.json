@@ -1,0 +1,14 @@
+{
+  "name": "order-receipt",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Tiny order receipt calculator used to demonstrate selective releases with git cherry-pick.",
+  "type": "module",
+  "scripts": {
+    "start": "node src/cli.js examples/order.json",
+    "test": "node --test"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
