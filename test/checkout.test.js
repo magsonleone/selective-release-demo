@@ -15,3 +15,9 @@ test('total equals the subtotal', () => {
   assert.equal(summary.subtotal, 20);
   assert.equal(summary.total, 20);
 });
+
+test('adds sales tax to the total', () => {
+  const summary = checkout(cart(), { taxRate: 0.1 });
+  assert.equal(summary.tax, 2);
+  assert.equal(summary.total, 22);
+});
