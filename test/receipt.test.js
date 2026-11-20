@@ -19,3 +19,10 @@ test('lists the items, the subtotal and the total', () => {
   assert.match(receipt, /^Subtotal +\$20\.00$/m);
   assert.match(receipt, /^Total +\$20\.00$/m);
 });
+
+test('shows the tax line when there is a tax rate', () => {
+  const receipt = renderReceipt(checkout(cart(), { taxRate: 0.08 }));
+
+  assert.match(receipt, /^Tax \(8%\) +\$1\.60$/m);
+  assert.match(receipt, /^Total +\$21\.60$/m);
+});

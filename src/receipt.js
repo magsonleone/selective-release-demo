@@ -14,6 +14,11 @@ export function renderReceipt(summary) {
 
   lines.push(separator());
   lines.push(row('Subtotal', `$${summary.subtotal.toFixed(2)}`));
+
+  if (summary.taxRate > 0) {
+    lines.push(row(`Tax (${formatRate(summary.taxRate)})`, `$${summary.tax.toFixed(2)}`));
+  }
+
   lines.push(row('Total', `$${summary.total.toFixed(2)}`));
 
   return lines.join('\n');
@@ -26,4 +31,8 @@ function row(label, value) {
 
 function separator() {
   return '-'.repeat(WIDTH);
+}
+
+function formatRate(rate) {
+  return `${Math.round(rate * 10000) / 100}%`;
 }
