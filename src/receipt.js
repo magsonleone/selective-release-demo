@@ -15,6 +15,10 @@ export function renderReceipt(summary) {
   lines.push(separator());
   lines.push(row('Subtotal', `$${summary.subtotal.toFixed(2)}`));
 
+  if (summary.discount > 0) {
+    lines.push(row(`Discount (${summary.coupon})`, `-$${summary.discount.toFixed(2)}`));
+  }
+
   if (summary.taxRate > 0) {
     lines.push(row(`Tax (${formatRate(summary.taxRate)})`, `$${summary.tax.toFixed(2)}`));
   }
