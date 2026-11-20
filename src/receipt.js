@@ -1,4 +1,5 @@
 import { lineTotal } from './cart.js';
+import { formatMoney } from './money.js';
 
 const WIDTH = 36;
 
@@ -9,21 +10,21 @@ export function renderReceipt(summary) {
   const lines = [];
 
   for (const item of summary.items) {
-    lines.push(row(`${item.quantity} x ${item.name}`, `$${lineTotal(item).toFixed(2)}`));
+    lines.push(row(`${item.quantity} x ${item.name}`, formatMoney(lineTotal(item))));
   }
 
   lines.push(separator());
-  lines.push(row('Subtotal', `$${summary.subtotal.toFixed(2)}`));
+  lines.push(row('Subtotal', formatMoney(summary.subtotal)));
 
   if (summary.discount > 0) {
-    lines.push(row(`Discount (${summary.coupon})`, `-$${summary.discount.toFixed(2)}`));
+    lines.push(row(`Discount (${summary.coupon})`, formatMoney(-summary.discount)));
   }
 
   if (summary.taxRate > 0) {
-    lines.push(row(`Tax (${formatRate(summary.taxRate)})`, `$${summary.tax.toFixed(2)}`));
+    lines.push(row(`Tax (${formatRate(summary.taxRate)})`, formatMoney(summary.tax)));
   }
 
-  lines.push(row('Total', `$${summary.total.toFixed(2)}`));
+  lines.push(row('Total', formatMoney(summary.total)));
 
   return lines.join('\n');
 }
