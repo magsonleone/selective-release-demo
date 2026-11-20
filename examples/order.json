@@ -3,5 +3,6 @@
     { "sku": "MUG-01", "name": "Coffee mug", "price": 12.5, "quantity": 2 },
     { "sku": "TEA-02", "name": "Green tea (50 bags)", "price": 8.75 },
     { "sku": "SPN-03", "name": "Tea spoon", "price": 3.25, "quantity": 2 }
-  ]
+  ],
+  "taxRate": 0.08
 }

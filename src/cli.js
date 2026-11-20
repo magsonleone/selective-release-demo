@@ -12,6 +12,6 @@ if (!file) {
 }
 
 const order = JSON.parse(readFileSync(file, 'utf8'));
-const summary = checkout(createCart(order.items));
+const summary = checkout(createCart(order.items), order);
 
 console.log(renderReceipt(summary));
