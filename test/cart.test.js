@@ -18,3 +18,13 @@ test('subtotal adds all lines', () => {
   ]);
   assert.equal(subtotal(cart), 20);
 });
+
+test('rejects a negative or missing price', () => {
+  assert.throws(() => createCart([{ sku: 'A', name: 'Apple', price: -1 }]), RangeError);
+  assert.throws(() => createCart([{ sku: 'A', name: 'Apple' }]), RangeError);
+});
+
+test('rejects a quantity that is not a positive integer', () => {
+  assert.throws(() => createCart([{ sku: 'A', name: 'Apple', price: 2, quantity: 0 }]), RangeError);
+  assert.throws(() => createCart([{ sku: 'A', name: 'Apple', price: 2, quantity: 1.5 }]), RangeError);
+});

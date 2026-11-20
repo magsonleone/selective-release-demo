@@ -21,5 +21,13 @@ export function subtotal(cart) {
 }
 
 function normalizeItem({ sku, name, price, quantity = 1 }) {
+  if (!Number.isFinite(price) || price < 0) {
+    throw new RangeError(`Invalid price for ${sku}: ${price}`);
+  }
+
+  if (!Number.isInteger(quantity) || quantity < 1) {
+    throw new RangeError(`Invalid quantity for ${sku}: ${quantity}`);
+  }
+
   return { sku, name, price, quantity };
 }
